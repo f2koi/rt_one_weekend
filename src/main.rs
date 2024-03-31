@@ -1,10 +1,18 @@
-mod pixel;
-mod ppm;
+use std::fs::File;
+use std::io::BufWriter;
 
 use pixel::Pixel;
 use ppm::PPM;
-use std::fs::File;
-use std::io::BufWriter;
+
+mod pixel;
+mod ppm;
+
+fn normalize_with_interval(x: usize, interval: (usize, usize)) -> f32 {
+    let (left, right) = interval;
+    assert!(left <= x && x < right);
+    let (numerator, denominator) = (x - left, right - left);
+    numerator as f32 / denominator as f32
+}
 
 fn main() {
     const RATIO: f32 = 16.0 / 9.0;
@@ -18,13 +26,13 @@ fn main() {
                 x,
                 y,
                 Pixel {
-                    red: x as u8,
-                    green: y as u8,
+                    red: (normalize_with_interval(x as usize, (0, WIDTH as usize)) * 256.0) as u8,
+                    green: (normalize_with_interval(y as usize, (0, HEIGHT as usize)) * 256.0) as u8,
                     blue: 0,
                 },
             );
         }
     }
-    let mut file_writer = BufWriter::new(File::create("./output/test.ppm").unwrap());
+    let mut file_writer = BufWriter::new(File::create("./test.ppm").unwrap());
     image.write_to(&mut file_writer).unwrap();
 }
