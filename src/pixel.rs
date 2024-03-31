@@ -1,16 +1,37 @@
-#[derive(Copy, Clone)]
+use gfxmath_vec3::{vec3, Vec3};
+
+#[derive(Clone)]
 pub struct Pixel {
-    pub red: u8,
-    pub green: u8,
-    pub blue: u8,
+    vec3: Vec3<u8>,
 }
 
 impl Pixel {
+    pub fn red(&self) -> u8 {
+        self.vec3.x
+    }
+    pub fn green(&self) -> u8 {
+        self.vec3.y
+    }
+
+    pub fn blue(&self) -> u8 {
+        self.vec3.z
+    }
+
+    pub fn new(red: u8, green: u8, blue: u8) -> Self {
+        Self {
+            vec3: vec3!(red, green, blue),
+        }
+    }
+
     pub fn black() -> Self {
         Self {
-            red: 0,
-            green: 0,
-            blue: 0,
+            vec3: vec3!(u8::MIN, u8::MIN, u8::MIN),
+        }
+    }
+
+    pub fn white() -> Self {
+        Self {
+            vec3: vec3!(u8::MAX, u8::MAX, u8::MAX),
         }
     }
 }

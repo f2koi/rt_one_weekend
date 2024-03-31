@@ -9,7 +9,11 @@ pub struct PPM {
 impl PPM {
     pub fn new_black(width: u32, height: u32) -> Self {
         let data = vec![Pixel::black(); width as usize * height as usize];
-        Self { width, height, data }
+        Self {
+            width,
+            height,
+            data,
+        }
     }
 
     pub fn set_pixel(&mut self, x: u32, y: u32, pixel: Pixel) {
@@ -21,7 +25,7 @@ impl PPM {
         writeln!(writer, "{} {}", self.width, self.height)?;
         writeln!(writer, "255")?;
         for pixel in &self.data {
-            writeln!(writer, "{} {} {}", pixel.red, pixel.green, pixel.blue)?;
+            writeln!(writer, "{} {} {}", pixel.red(), pixel.green(), pixel.blue())?;
         }
         Ok(())
     }

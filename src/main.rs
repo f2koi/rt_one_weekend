@@ -7,7 +7,7 @@ use ppm::PPM;
 mod pixel;
 mod ppm;
 
-fn normalize_with_interval(x: usize, interval: (usize, usize)) -> f32 {
+fn normalize(x: usize, interval: (usize, usize)) -> f32 {
     let (left, right) = interval;
     assert!(left <= x && x < right);
     let (numerator, denominator) = (x - left, right - left);
@@ -25,14 +25,15 @@ fn main() {
             image.set_pixel(
                 x,
                 y,
-                Pixel {
-                    red: (normalize_with_interval(x as usize, (0, WIDTH as usize)) * 256.0) as u8,
-                    green: (normalize_with_interval(y as usize, (0, HEIGHT as usize)) * 256.0) as u8,
-                    blue: 0,
-                },
+                Pixel::new(
+                    (normalize(x as usize, (0, WIDTH as usize)) * 256.0) as u8,
+                    (normalize(y as usize, (0, HEIGHT as usize)) * 256.0) as u8,
+                    0,
+                ),
             );
         }
     }
+
     let mut file_writer = BufWriter::new(File::create("./test.ppm").unwrap());
     image.write_to(&mut file_writer).unwrap();
 }
