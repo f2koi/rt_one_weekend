@@ -5,6 +5,24 @@ pub struct Pixel {
     vec3: Vec3<u8>,
 }
 
+impl From<Vec3<f32>> for Pixel {
+    fn from(value: Vec3<f32>) -> Self {
+        Self {
+            vec3: vec3!(
+                (value.x * 256.0) as u8,
+                (value.y * 256.0) as u8,
+                (value.z * 256.0) as u8
+            ),
+        }
+    }
+}
+
+impl From<Vec3<u8>> for Pixel {
+    fn from(value: Vec3<u8>) -> Self {
+        Self { vec3: value }
+    }
+}
+
 #[allow(dead_code)]
 impl Pixel {
     pub fn red(&self) -> u8 {
