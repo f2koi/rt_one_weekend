@@ -13,7 +13,16 @@ impl Ray<f32> {
             unit_direction: direction.norm().unwrap(),
         }
     }
+
     pub fn at(&self, time: f32) -> Vec3<f32> {
         &self.origin + time * &self.unit_direction
+    }
+
+    pub fn unit_direction(&self) -> &Vec3<f32> {
+        &self.unit_direction
+    }
+
+    pub fn origin(&self) -> &Vec3<f32> {
+        &self.origin
     }
 }
