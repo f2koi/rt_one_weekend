@@ -5,6 +5,7 @@ pub struct Pixel {
     vec3: Vec3<u8>,
 }
 
+#[allow(dead_code)]
 impl Pixel {
     pub fn red(&self) -> u8 {
         self.vec3.x
