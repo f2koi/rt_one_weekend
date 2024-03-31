@@ -1,10 +1,10 @@
-mod ppm;
 mod pixel;
+mod ppm;
 
-use std::fs::File;
-use std::io::BufWriter;
 use pixel::Pixel;
 use ppm::PPM;
+use std::fs::File;
+use std::io::BufWriter;
 
 fn main() {
     const RATIO: f32 = 16.0 / 9.0;
@@ -14,7 +14,15 @@ fn main() {
     let mut image = PPM::new_black(WIDTH, HEIGHT);
     for x in 0..WIDTH {
         for y in 0..HEIGHT {
-            image.set_pixel(x, y, Pixel { red: x as u8, green: y as u8, blue: 0 });
+            image.set_pixel(
+                x,
+                y,
+                Pixel {
+                    red: x as u8,
+                    green: y as u8,
+                    blue: 0,
+                },
+            );
         }
     }
     let mut file_writer = BufWriter::new(File::create("./output/test.ppm").unwrap());

@@ -7,6 +7,10 @@ pub struct Pixel {
 
 impl Pixel {
     pub fn black() -> Self {
-        Self { red: 0, green: 0, blue: 0 }
+        Self {
+            red: 0,
+            green: 0,
+            blue: 0,
+        }
     }
 }
