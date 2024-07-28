@@ -2,45 +2,22 @@ use core::f32;
 use std::fs::File;
 use std::io::BufWriter;
 
-use gfxmath_vec3::{
-    ops::{Dot, Norm},
-    vec3, Vec3,
-};
+use gfxmath_vec3::{vec3, Vec3};
+use hittable::{sphere::Sphere, world::World};
 use ppm::PPM;
 use ray::Ray;
 
 use crate::vec3_extension::Vec3Extension;
 
+mod hittable;
 mod pixel;
 mod ppm;
 mod ray;
 mod vec3_extension;
 
-fn first_intersection_with_sphere(ray: &Ray<f32>, center: &Vec3<f32>, radius: f32) -> Option<f32> {
-    let origin_to_center = center - ray.origin();
-
-    // Solve quadratic equation.
-    let a = ray.unit_direction().dot(ray.unit_direction());
-    let b = -2.0 * ray.unit_direction().dot(&origin_to_center);
-    let c = (&origin_to_center).dot(&origin_to_center) - radius * radius;
-
-    let discriminant = b * b - 4.0 * a * c;
-
-    if discriminant >= 0.0 {
-        let smaller_root = (-b - discriminant.sqrt()) / (2.0 * a);
-        Some(smaller_root)
-    } else {
-        None
-    }
-}
-
-fn ray_color(ray: &Ray<f32>) -> Vec3<f32> {
-    let center = vec3!(0.0, 0.0, -1.0);
-    let radius = 0.45;
-
-    if let Some(t) = first_intersection_with_sphere(ray, &center, radius) {
-        let surface_normal = (ray.at(t) - center).norm().unwrap();
-        return (0.5 * surface_normal + vec3!(0.5, 0.5, 0.5)).into();
+fn ray_color(ray: &Ray<f32>, world: &World) -> Vec3<f32> {
+    if let Some(record) = world.hit(ray, (0.0, 1000.0)) {
+        return (0.5 * record.surface_normal + vec3!(0.5, 0.5, 0.5)).into();
     }
 
     let y = ray.unit_direction().y;
@@ -78,6 +55,11 @@ fn main() {
         viewport_upper_left_pixel_position
     );
 
+    let mut world = World::new();
+    world.add_object(Box::new(Sphere::new(vec3!(0.2, 1.0, -3.0), 0.6)));
+    world.add_object(Box::new(Sphere::new(vec3!(0.0, 0.0, -3.0), 0.5)));
+    world.add_object(Box::new(Sphere::new(vec3!(1.0, 0.0, -3.0), 0.2)));
+
     let mut image = PPM::new_black(IMAGE_WIDTH, IMAGE_HEIGHT);
     for x in 0..IMAGE_WIDTH {
         for y in 0..IMAGE_HEIGHT {
@@ -86,7 +68,7 @@ fn main() {
                 + y as f32 * &delta_pixel_v;
             let ray_direction = &pixel_position - &camera_center;
             let ray = Ray::new(camera_center.to_owned(), ray_direction);
-            image.set_pixel(x, y, ray_color(&ray).into());
+            image.set_pixel(x, y, ray_color(&ray, &world).into());
         }
     }
 

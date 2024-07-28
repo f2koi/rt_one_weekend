@@ -1,5 +1,6 @@
 use gfxmath_vec3::{ops::Norm, vec3, Vec3};
 
+#[derive(Clone, Debug)]
 pub struct Ray<T> {
     origin: Vec3<T>,
     unit_direction: Vec3<T>,
