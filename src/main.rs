@@ -90,6 +90,6 @@ fn main() {
         }
     }
 
-    let mut file_writer = BufWriter::new(File::create("./test.ppm").unwrap());
+    let mut file_writer = BufWriter::new(File::create("./output/test.ppm").unwrap());
     image.write_to(&mut file_writer).unwrap();
 }
