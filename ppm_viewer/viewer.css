@@ -1,0 +1,30 @@
+form, div, p {
+    text-align: center;
+}
+
+div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+form, div {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#name {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+#errorDiv {
+    text-align: center;
+}
+
+.error {
+    display: inline-block;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+}
