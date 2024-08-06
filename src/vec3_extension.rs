@@ -1,5 +1,6 @@
 use gfxmath_vec3::{ops::Dot, vec3, Vec3};
 
+#[allow(dead_code)]
 pub trait Vec3Extension<T>
 where
     Vec3<T>: Dot<Output = T>,
