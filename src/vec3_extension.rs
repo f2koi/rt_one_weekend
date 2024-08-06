@@ -9,6 +9,7 @@ where
     fn unit_z() -> Vec3<T>;
     fn zero() -> Vec3<T>;
     fn squared(&self) -> T;
+    fn l2norm(&self) -> T;
 }
 
 impl Vec3Extension<f32> for Vec3<f32> {
@@ -30,5 +31,9 @@ impl Vec3Extension<f32> for Vec3<f32> {
 
     fn squared(&self) -> f32 {
         self.dot(self)
+    }
+
+    fn l2norm(&self) -> f32 {
+        self.squared().sqrt()
     }
 }
