@@ -2,9 +2,9 @@ use core::f32;
 use std::fs::File;
 use std::io::BufWriter;
 
+use crate::camera::viewport::Viewport;
 use crate::camera::Camera;
 use crate::hittable::{sphere::Sphere, world::World};
-use camera::Viewport;
 use gfxmath_vec3::ops::Norm;
 use gfxmath_vec3::{vec3, Vec3};
 
@@ -25,7 +25,7 @@ fn main() {
     const VIEWPORT_WIDTH: f32 = 2.0;
     const VIEWPORT_HEIGHT: f32 = VIEWPORT_WIDTH / RATIO;
 
-    let camera_center = vec3!(2.0, 0.0, -2.0);
+    let camera_center = vec3!(1.0, 0.0, -3.0);
     let focal_vector = vec3!(-1.0, 0.0, 0.0);
     let top_direction = Vec3::<f32>::new(0.0, 1.0, 0.0).norm().unwrap();
     let viewport = Viewport {
