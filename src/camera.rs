@@ -1,3 +1,6 @@
+use std::borrow::Borrow;
+
+use gfxmath_vec3::ops::{Cross, Norm};
 use gfxmath_vec3::{vec3, Vec3};
 
 use crate::hittable::world::World;
@@ -5,48 +8,54 @@ use crate::ppm::PPM;
 use crate::ray::Ray;
 use crate::vec3_extension::Vec3Extension;
 
-pub struct Camera {
-    center: Vec3<f32>,
-    focal_length: f32,
-    viewport: (f32, f32),
+pub struct Viewport {
+    pub width: f32,
+    pub height: f32,
 }
 
-impl Camera {
-    fn viewport_width(&self) -> f32 {
-        self.viewport.0
-    }
-
-    fn viewport_height(&self) -> f32 {
-        self.viewport.1
-    }
+pub struct Camera {
+    center: Vec3<f32>,
+    focal_vector: Vec3<f32>,
+    top_direction: Vec3<f32>,
+    viewport: Viewport,
 }
 
 #[allow(dead_code)]
 impl Camera {
-    pub fn new(center: &Vec3<f32>, focal_length: f32, viewport: (f32, f32)) -> Self {
+    pub fn new(
+        center: &Vec3<f32>,
+        focal_vector: Vec3<f32>,
+        top_direction: Vec3<f32>,
+        viewport: Viewport,
+    ) -> Self {
         Self {
             center: center.to_owned(),
-            focal_length,
+            focal_vector,
+            top_direction,
             viewport,
         }
     }
 
     pub fn ratio(&self) -> f32 {
-        self.viewport_width() / self.viewport_height()
+        self.viewport.width / self.viewport.height
     }
 
     pub fn render(&self, world: &World, image_width: u32) -> PPM {
         let image_height = (image_width as f32 / self.ratio()) as u32;
 
-        let viewport_u = self.viewport_width() * Vec3::unit_x();
-        let viewport_v = -self.viewport_height() * Vec3::unit_y();
+        let unit_z = -self.focal_vector.borrow().norm().unwrap();
+        let unit_y = self.top_direction.to_owned();
+        let unit_x = unit_y.borrow().cross(&unit_z);
+
+        let viewport_u = self.viewport.width * &unit_x;
+        let viewport_v = -self.viewport.height * &unit_y;
         let delta_pixel_u = &viewport_u / image_width as f32;
         let delta_pixel_v = &viewport_v / image_height as f32;
 
         let viewport_upper_left = &self.center
-            + -self.focal_length * Vec3::unit_z()
-            + (-self.viewport_width() / 2.0) * Vec3::unit_x()
-            + (self.viewport_height() / 2.0) * Vec3::unit_y();
+            + -self.focal_vector.l2norm() * unit_z
+            + (-self.viewport.width / 2.0) * unit_x
+            + (self.viewport.height / 2.0) * unit_y;
         let viewport_upper_left_pixel_position =
             &viewport_upper_left + 0.5 * &delta_pixel_u + 0.5 * &delta_pixel_v;
 
