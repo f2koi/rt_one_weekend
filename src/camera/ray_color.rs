@@ -17,7 +17,7 @@ pub(super) fn ray_color(ray: &Ray<f32>, world: &World, remaining_depth: u32) -> 
         return vec3!(0.0, 0.0, 0.0);
     }
 
-    if let Some(record) = world.hit(ray, (0.0, 1000.0)) {
+    if let Some(record) = world.hit(ray, (0.001, 1000.0)) {
         let reflected_ray = randomly_reflected_ray(&record);
         return 0.5 * ray_color(&reflected_ray, world, remaining_depth - 1);
     }

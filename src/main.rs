@@ -35,7 +35,7 @@ fn main() {
 
     let camera = Camera::new(&camera_center, focal_vector, top_direction, viewport);
 
-    let image = camera.render(&world, 256);
+    let image = camera.render(&world, 512);
 
     let mut file_writer = BufWriter::new(File::create("./output/test.ppm").unwrap());
     image.write_to(&mut file_writer).unwrap();
