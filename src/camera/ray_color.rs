@@ -12,10 +12,14 @@ use crate::hittable::world::World;
 use crate::hittable::HitRecord;
 use crate::ray::Ray;
 
-pub(super) fn ray_color(ray: &Ray<f32>, world: &World) -> Vec3<f32> {
+pub(super) fn ray_color(ray: &Ray<f32>, world: &World, remaining_depth: u32) -> Vec3<f32> {
+    if remaining_depth == 0 {
+        return vec3!(0.0, 0.0, 0.0);
+    }
+
     if let Some(record) = world.hit(ray, (0.0, 1000.0)) {
         let reflected_ray = randomly_reflected_ray(&record);
-        return 0.5 * ray_color(&reflected_ray, world);
+        return 0.5 * ray_color(&reflected_ray, world, remaining_depth - 1);
     }
 
     let y = ray.unit_direction().y;
