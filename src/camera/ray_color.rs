@@ -41,12 +41,12 @@ fn randomly_reflected_ray(hit_record: &HitRecord) -> Ray<f32> {
 
 fn random_normal_vector() -> Vec3<f32> {
     let theta = random() * 2.0 * PI;
-    let phi = random() * PI;
+    let phi = (random() - 0.5) * PI;
 
     vec3!(
-        theta.cos(),
-        theta.sin() * phi.cos(),
-        theta.sin() * phi.sin()
+        phi.cos() * theta.cos(),
+        phi.cos() * theta.sin(),
+        phi.sin()
     )
 }
 
