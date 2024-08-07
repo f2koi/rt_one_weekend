@@ -15,11 +15,11 @@ impl PointSampler {
 
     pub(super) fn sample(&self, pixel_point: &Vec3<f32>) -> Vec<Vec3<f32>> {
         let mut sample_points = vec![];
-        for i in 0..4 {
-            for j in 0..4 {
+        for i in 0..3 {
+            for j in 0..3 {
                 let sampled = pixel_point
-                    + (i as f32 / 4.0) * &self.delta_pixel_u
-                    + (j as f32 / 4.0) * &self.delta_pixel_v;
+                    + (i as f32 / 3.0) * &self.delta_pixel_u
+                    + (j as f32 / 3.0) * &self.delta_pixel_v;
                 sample_points.push(sampled);
             }
         }
