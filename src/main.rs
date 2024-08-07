@@ -19,7 +19,7 @@ fn main() {
     let mut world = World::new();
     world.add_object(Box::new(Sphere::new(vec3!(0.2, 1.0, -3.0), 0.6)));
     world.add_object(Box::new(Sphere::new(vec3!(0.0, 0.0, -3.0), 0.5)));
-    world.add_object(Box::new(Sphere::new(vec3!(0.0, -20.0, -5.0), 19.5)));
+    world.add_object(Box::new(Sphere::new(vec3!(0.0, -20.0, -5.0), 19.55)));
 
     const RATIO: f32 = 16.0 / 9.0;
     const VIEWPORT_WIDTH: f32 = 2.0;

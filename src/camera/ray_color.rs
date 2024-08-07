@@ -1,11 +1,9 @@
-use std::borrow::Borrow;
 use std::f32::consts::PI;
 use std::fs::File;
 use std::io::{BufReader, Read};
 
 use std::sync::{OnceLock, RwLock};
 
-use gfxmath_vec3::ops::Dot;
 use gfxmath_vec3::{vec3, Vec3};
 
 use crate::hittable::world::World;
@@ -31,23 +29,15 @@ pub(super) fn ray_color(ray: &Ray<f32>, world: &World, remaining_depth: u32) -> 
 
 fn randomly_reflected_ray(hit_record: &HitRecord) -> Ray<f32> {
     let origin = hit_record.ray.at(hit_record.t);
-    let direction = random_normal_vector();
-    if hit_record.surface_normal.borrow().dot(&direction) >= 0.0 {
-        Ray::new(origin, direction)
-    } else {
-        Ray::new(origin, -direction)
-    }
+    let direction = random_normal_vector() + &hit_record.surface_normal;
+    Ray::new(origin, direction)
 }
 
 fn random_normal_vector() -> Vec3<f32> {
     let theta = random() * 2.0 * PI;
     let phi = (random() - 0.5) * PI;
 
-    vec3!(
-        phi.cos() * theta.cos(),
-        phi.cos() * theta.sin(),
-        phi.sin()
-    )
+    vec3!(phi.cos() * theta.cos(), phi.cos() * theta.sin(), phi.sin())
 }
 
 fn random() -> f32 {
