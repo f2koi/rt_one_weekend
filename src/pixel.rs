@@ -9,9 +9,9 @@ impl From<Vec3<f32>> for Pixel {
     fn from(value: Vec3<f32>) -> Self {
         Self {
             vec3: vec3!(
-                (value.x * 256.0) as u8,
-                (value.y * 256.0) as u8,
-                (value.z * 256.0) as u8
+                (linear_to_gamma(value.x) * 256.0) as u8,
+                (linear_to_gamma(value.y) * 256.0) as u8,
+                (linear_to_gamma(value.z) * 256.0) as u8
             ),
         }
     }
@@ -52,5 +52,13 @@ impl Pixel {
         Self {
             vec3: vec3!(u8::MAX, u8::MAX, u8::MAX),
         }
+    }
+}
+
+fn linear_to_gamma(value: f32) -> f32 {
+    if value >= 0.0 {
+        value.sqrt()
+    } else {
+        panic!("Negative value in linear_to_gamma")
     }
 }
