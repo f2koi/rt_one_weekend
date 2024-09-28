@@ -3,7 +3,7 @@ use std::borrow::Borrow;
 
 use gfxmath_vec3::ops::{Cross, Norm};
 
-use crate::camera::point_sampler::{UniformPointSampler, PointSampler};
+use crate::camera::point_sampler::{PointSampler, UniformPointSampler};
 use crate::camera::ray_color::ray_color;
 use crate::camera::viewport::Viewport;
 use crate::hittable::world::World;

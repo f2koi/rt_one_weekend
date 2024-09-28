@@ -1,8 +1,8 @@
 use gfxmath_vec3::ops::Dot;
 use gfxmath_vec3::Vec3;
 
-use crate::hittable::HitRecord;
 use crate::hittable::material::{Material, Reflection};
+use crate::hittable::HitRecord;
 use crate::ray::Ray;
 
 #[derive(Clone)]

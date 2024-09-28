@@ -18,7 +18,10 @@ mod vec3_extension;
 fn main() {
     let mut world = World::new();
     world.add_object(Box::new(Sphere::metal(vec3!(0.0, 0.0, -1.0), 0.5)));
-    world.add_object(Box::new(Sphere::lambertian(vec3!(0.0, -100.5, -1.0), 100.0)));
+    world.add_object(Box::new(Sphere::lambertian(
+        vec3!(0.0, -100.5, -1.0),
+        100.0,
+    )));
 
     const RATIO: f32 = 16.0 / 9.0;
     const VIEWPORT_WIDTH: f32 = 3.56;

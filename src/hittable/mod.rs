@@ -1,11 +1,11 @@
 use gfxmath_vec3::Vec3;
 
-use material::ConcreteMaterial;
 use crate::ray::Ray;
+use material::ConcreteMaterial;
 
+pub mod material;
 pub mod sphere;
 pub mod world;
-pub mod material;
 
 pub struct HitRecord {
     pub t: f32,

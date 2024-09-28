@@ -3,8 +3,8 @@ use std::f32::consts::PI;
 use gfxmath_vec3::{vec3, Vec3};
 use rand::random;
 
-use crate::hittable::HitRecord;
 use crate::hittable::material::{Material, Reflection};
+use crate::hittable::HitRecord;
 use crate::ray::Ray;
 
 #[derive(Clone)]

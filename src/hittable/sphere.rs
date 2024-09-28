@@ -1,7 +1,7 @@
+use crate::hittable::material::{lambertian::Lambertian, metal::Metal};
 use crate::hittable::{HitRecord, HittableObject};
 use crate::ray::Ray;
 use crate::vec3_extension::Vec3Extension;
-use crate::hittable::material::{lambertian::Lambertian, metal::Metal};
 
 use gfxmath_vec3::ops::{Dot, Norm};
 use gfxmath_vec3::{vec3, Vec3};
@@ -17,12 +17,20 @@ pub struct Sphere {
 impl Sphere {
     pub fn lambertian(center: Vec3<f32>, radius: f32) -> Self {
         let material = Lambertian::new(vec3!(0.5, 0.5, 0.5));
-        Self { center, radius, material: ConcreteMaterial::Lambertian(material) }
+        Self {
+            center,
+            radius,
+            material: ConcreteMaterial::Lambertian(material),
+        }
     }
 
     pub fn metal(center: Vec3<f32>, radius: f32) -> Self {
         let material = Metal::new(vec3!(1.0, 1.0, 1.0));
-        Self { center, radius, material: ConcreteMaterial::Metal(material) }
+        Self {
+            center,
+            radius,
+            material: ConcreteMaterial::Metal(material),
+        }
     }
 }
 

@@ -1,7 +1,6 @@
 use gfxmath_vec3::Vec3;
 use rand::{thread_rng, Rng};
 
-
 pub(super) trait PointSampler {
     fn sample(&self, pixel_point: &Vec3<f32>) -> Vec<Vec3<f32>>;
 }

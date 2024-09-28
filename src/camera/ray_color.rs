@@ -19,7 +19,7 @@ pub(super) fn ray_color(ray: &Ray<f32>, world: &World, remaining_depth: u32) -> 
         if let Some(reflection) = reflection {
             return reflection.attenuation * ray_color(&reflection.ray, world, remaining_depth - 1);
         }
-        
+
         // absortion
         return vec3!(0.0, 0.0, 0.0);
     }

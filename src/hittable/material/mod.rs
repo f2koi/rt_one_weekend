@@ -1,5 +1,5 @@
-use gfxmath_vec3::Vec3;
 use crate::ray::Ray;
+use gfxmath_vec3::Vec3;
 
 use super::HitRecord;
 
