@@ -76,7 +76,7 @@ impl Camera {
                 for sample_point in sample_points.iter() {
                     let ray_direction = sample_point - &self.center;
                     let ray = Ray::new(self.center.to_owned(), ray_direction);
-                    let color = ray_color(&ray, world, 5);
+                    let color = ray_color(&ray, world, 10);
                     blended_color += color;
                 }
 
