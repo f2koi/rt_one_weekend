@@ -3,7 +3,7 @@ use std::borrow::Borrow;
 
 use gfxmath_vec3::ops::{Cross, Norm};
 
-use crate::camera::point_sampler::PointSampler;
+use crate::camera::point_sampler::{UniformPointSampler, PointSampler};
 use crate::camera::ray_color::ray_color;
 use crate::camera::viewport::Viewport;
 use crate::hittable::world::World;
@@ -61,7 +61,7 @@ impl Camera {
         let viewport_upper_left_pixel_position =
             &viewport_upper_left + 0.5 * &delta_pixel_u + 0.5 * &delta_pixel_v;
 
-        let point_sampler = PointSampler::new(&delta_pixel_u, &delta_pixel_v);
+        let point_sampler = UniformPointSampler::new(&delta_pixel_u, &delta_pixel_v);
 
         let mut image = PPM::new_black(image_width, image_height);
         for x in 0..image_width {
